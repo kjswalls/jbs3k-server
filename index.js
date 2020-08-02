@@ -1,13 +1,15 @@
 const express = require("express");
+const dotenv = require("dotenv");
 const { ApolloServer } = require("apollo-server-express");
+const responseCachePlugin = require("apollo-server-plugin-response-cache");
 const { resolve } = require("path");
 const history = require("connect-history-api-fallback");
 const typeDefs = require("./schema.js");
 const resolvers = require("./resolvers.js");
 
+dotenv.config();
 const { PORT = 4000 } = process.env;
 const publicPath = resolve(__dirname, "public");
-// const staticConfig = { maxAge: "1y", etag: false };
 
 const app = express();
 const server = new ApolloServer({
@@ -15,6 +17,10 @@ const server = new ApolloServer({
   resolvers,
   introspection: true,
   playground: true,
+  cacheControl: {
+    defaultMaxAge: 86400,
+  },
+  plugins: [responseCachePlugin()],
 });
 
 server.applyMiddleware({
