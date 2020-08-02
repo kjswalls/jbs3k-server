@@ -23,8 +23,6 @@ app.use(
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  introspection: true,
-  playground: true,
   cacheControl: {
     defaultMaxAge: 86400,
   },
