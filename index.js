@@ -15,7 +15,7 @@ const publicPath = resolve(__dirname, "public");
 const app = express();
 app.use(
   cors({
-    origin: "https://jbs3k-client.vercel.app",
+    origin: "https://jbs3k.vercel.app",
     optionsSuccessStatus: 200,
   })
 );
@@ -33,7 +33,7 @@ server.applyMiddleware({
   app,
   path: "/graphql",
   cors: {
-    origin: "https://jbs3k-client.vercel.app",
+    origin: "https://jbs3k.vercel.app",
   },
 });
 
