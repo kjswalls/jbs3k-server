@@ -1,5 +1,6 @@
 const express = require("express");
 const dotenv = require("dotenv");
+const cors = require("cors");
 const { ApolloServer } = require("apollo-server-express");
 const responseCachePlugin = require("apollo-server-plugin-response-cache");
 const { resolve } = require("path");
@@ -12,6 +13,13 @@ const { PORT = 4000 } = process.env;
 const publicPath = resolve(__dirname, "public");
 
 const app = express();
+app.use(
+  cors({
+    origin: "https://jbs3k-client.vercel.app",
+    optionsSuccessStatus: 200,
+  })
+);
+
 const server = new ApolloServer({
   typeDefs,
   resolvers,
@@ -26,7 +34,9 @@ const server = new ApolloServer({
 server.applyMiddleware({
   app,
   path: "/graphql",
-  cors: true,
+  cors: {
+    origin: "https://jbs3k-client.vercel.app",
+  },
 });
 
 app.use(express.static(publicPath));
